@@ -1,24 +1,26 @@
 .app {
-  background: #209cee;
+  background: rgb(173, 98, 173);
   padding: 30px;
   height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
-.todo-list {
+.item {
   background: #e8e8e8;
   border-radius: 4px;
   padding: 5px;
-  max-width: 400px;
+  margin: 5px;
+  width: 600px;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
 }
 
-.todo {
-  background: #fff;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
-  padding: 3px 10px;
-  font-size: 12px;
-  margin-bottom: 6px;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+#add-input{
+  width: 100%;
 }

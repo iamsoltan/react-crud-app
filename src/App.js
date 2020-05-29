@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Editor from "./Editor";
 import Loader from "./Loader";
-import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom";
 import Axios from 'axios';
 
 class App extends Component {
@@ -24,29 +22,27 @@ class App extends Component {
 
   /* axios */
   componentDidMount() {
-    Axios.get("https://jsonplaceholder.typicode.com/todos")
-    .then(res=>{ this.setState({todoList : res.data}) })
+    Axios.get("https://jsonplaceholder.typicode.com/todos?_limit=10")
+      .then(res => { this.setState({ todoList: res.data }) })
   }
-  
+
+  /*crud */
+  update=(e)=>{
+    e.target.parentNode.nodeName = "input"
+  }
+
 
   render() {
 
     return (
-      <Router>
-
-        <div className="App">
-          <Switch>
-            {/*<Route path="/" exact component={() => <MovieList user={this.state.user} addFav={this.addFav} array={this.filtered(this.state.movieList, this.state.keyword, this.state.rate)} />} />
-                        */}
-           {/* <Route path="/" exact component={() => <Loader loaded={this.loaded} isLoading={this.state.isLoading} compo={<MovieList loaded={this.loaded} user={this.state.user} addFav={this.addFav} array={this.filtered(this.state.movieList, this.state.keyword, this.state.rate)} />} />} />*/}
-            <Route path="/" exact component={() =>this.state.todoList.map(x=><div>{x.title}</div>) } />
-            <Route path="/add" component={() => <Editor addMovie={this.addMovie} mode="add" />} />
-            <Route path="/edit/:iDelete" component={() => <Editor e={this.state.movieList} updateMovie={this.updateMovie} deleteMovie={this.deleteMovie} mode="edit" />} />
-          </Switch>
-
-        </div>
-
-      </Router>
+      <div>
+        
+      <div className="app">
+      <div className='item'><input id="add-input"></input><button onClick={e=>{
+      let y=[{id:this.state.todoList.length+1,title:e.target.parentNode.firstChild.value},...this.state.todoList];console.log(y);this.setState({todoList : y})}}>add</button></div>
+        {this.state.todoList.map(x => <div key={x.id} className="item"><button>{x.id}</button>{x.title}<div><button onClick={e=>this.update(e)}>update</button><button>delete</button></div></div>)}
+      </div>
+      </div>
     );
   }
 }
