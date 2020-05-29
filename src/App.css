@@ -21,6 +21,18 @@
   justify-content: space-between;
 }
 
-#add-input{
+#add-input {
   width: 100%;
+}
+p {
+  margin: auto;
+
+}
+#add-btn {
+  width: 130px;
+}
+.editable {
+  border-radius : 5px;
+  border: 1px solid palevioletred ;
+  padding-right: 20px;
 }

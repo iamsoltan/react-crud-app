@@ -27,8 +27,29 @@ class App extends Component {
   }
 
   /*crud */
-  update=(e)=>{
-    e.target.parentNode.nodeName = "input"
+  update = (e) => {
+    let part = e.target.parentNode.parentNode;
+    let elt = part.childNodes[1];
+    if (elt.contentEditable !== "true") {
+      e.target.innerHTML = "save";
+      e.target.style.backgroundColor = "blue";
+      elt.className = "editable";
+      elt.contentEditable = "true";
+    } else if (elt.contentEditable === "true") {
+      e.target.innerHTML = "update";
+      e.target.style.backgroundColor = "";
+      elt.className = "";
+      elt.contentEditable = "false";
+    }
+  }
+  add = (e) => {
+    let y = [{ id: this.state.todoList.length + 1, title: e.target.parentNode.firstChild.value }, ...this.state.todoList];
+    this.setState({ todoList: y })
+  }
+  delete = (e) => {
+    let i = e.target.parentNode.parentNode.firstChild.innerHTML * 1;
+    let cleanArray = this.state.todoList.filter(item => item.id !== i);
+    this.setState({ todoList: [...cleanArray] })
   }
 
 
@@ -36,12 +57,24 @@ class App extends Component {
 
     return (
       <div>
-        
-      <div className="app">
-      <div className='item'><input id="add-input"></input><button onClick={e=>{
-      let y=[{id:this.state.todoList.length+1,title:e.target.parentNode.firstChild.value},...this.state.todoList];console.log(y);this.setState({todoList : y})}}>add</button></div>
-        {this.state.todoList.map(x => <div key={x.id} className="item"><button>{x.id}</button>{x.title}<div><button onClick={e=>this.update(e)}>update</button><button>delete</button></div></div>)}
-      </div>
+
+        <div className="app">
+          <div className='item'>
+            <input id="add-input"></input>
+            <button id="add-btn" onClick={e => { this.add(e) }}>add</button>
+          </div>
+          {
+            this.state.todoList.map(x =>
+              <div key={x.id} className="item">
+                <button>{x.id}</button>
+                <p>{x.title}</p>
+                <div>
+                  <button onClick={e => this.update(e)}>update</button>
+                  <button id="del" onClick={e => this.delete(e)}>delete</button>
+                </div>
+              </div>)
+          }
+        </div>
       </div>
     );
   }
