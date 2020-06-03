@@ -22,8 +22,11 @@ class App extends Component {
 
   /* axios */
   componentDidMount() {
-    Axios.get("https://jsonplaceholder.typicode.com/todos?_limit=10")
-      .then(res => { this.setState({ todoList: res.data }) })
+    Axios.get("https://api.jsonbin.io/b/5ed7e92a79382f568bd2862d", {
+      headers: {
+        "secret-key": "$2b$10$5ezr.oHY3Mqsd0gwv19NQ.B8Bs9.ilzJ.4B6mz.jVsFhDD1tmeAou"
+      }
+    }).then(res => { this.setState({ todoList: res.data }); console.log(res.data) })
   }
 
   /*crud */
@@ -59,6 +62,31 @@ class App extends Component {
       <div>
 
         <div className="app">
+          <button id="add-btn" onClick={e => {
+            Axios.put("https://api.jsonbin.io/b/5ed7e92a79382f568bd2862d",
+              [{
+                "id": 1,
+                "title": "bihind enemy lines"
+              },
+              {
+                "id": 2,
+                "title": "the transporter"
+              },
+              {
+                id: "3",
+                title: "الرسالة‎"
+              }],
+              {
+                headers: {
+                  'secret-key': "$2b$10$5ezr.oHY3Mqsd0gwv19NQ.B8Bs9.ilzJ.4B6mz.jVsFhDD1tmeAou",
+                  "versioning": "false",
+                  "Content-Type": "application/json"
+                }
+
+
+              })
+          }}>add to jsonbin</button>
+
           <div className='item'>
             <input id="add-input"></input>
             <button id="add-btn" onClick={e => { this.add(e) }}>add</button>
